@@ -1,0 +1,11 @@
+bin/ngspice.exe
+bin/ngspice.pdb
+bin/ngspice_con.exe
+bin/vcomp140.dll
+lib/ngspice/analog.cm
+lib/ngspice/digital.cm
+lib/ngspice/spice2poly.cm
+lib/ngspice/table.cm
+lib/ngspice/xtradev.cm
+lib/ngspice/xtraevt.cm
+share/ngspice/scripts/spinit

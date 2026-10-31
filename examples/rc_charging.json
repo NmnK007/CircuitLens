@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "name": "Showcase RC Low-Pass Filter Step Response",
+  "description": "5V DC step into 1kΩ resistor and 10μF capacitor (tau = 10ms)",
+  "analysis": "transient",
+  "ground_node": "0",
+  "components": [
+    {
+      "id": "V1",
+      "type": "voltage_source_dc",
+      "name": "DC Step Source (5V)",
+      "value": {
+        "magnitude": 5.0,
+        "unit": "V"
+      },
+      "terminals": ["in", "0"],
+      "confidence": 1.0,
+      "is_uncertain": false
+    },
+    {
+      "id": "R1",
+      "type": "resistor",
+      "name": "Series Resistor (1kΩ)",
+      "value": {
+        "magnitude": 1000.0,
+        "unit": "ohm"
+      },
+      "terminals": ["in", "out"],
+      "confidence": 1.0,
+      "is_uncertain": false
+    },
+    {
+      "id": "C1",
+      "type": "capacitor",
+      "name": "Filter Capacitor (10μF)",
+      "value": {
+        "magnitude": 0.00001,
+        "unit": "F"
+      },
+      "terminals": ["out", "0"],
+      "initial_voltage": 0.0,
+      "confidence": 1.0,
+      "is_uncertain": false
+    }
+  ],
+  "simulation": {
+    "type": "transient",
+    "step_seconds": 0.00001,
+    "stop_seconds": 0.05
+  }
+}

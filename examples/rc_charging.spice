@@ -1,0 +1,12 @@
+* CircuitLens RC Charging Showcase
+* Reference: 5V step, 1k ohm, 10uF, tau = 10ms
+V1 in 0 DC 5
+R1 in out 1k
+C1 out 0 10u IC=0
+.tran 10u 50m UIC
+.control
+run
+set filetype=ascii
+write rc_output.raw v(out) v(in) i(V1)
+.endc
+.end

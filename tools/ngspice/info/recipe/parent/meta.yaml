@@ -1,0 +1,202 @@
+{% set name = "ngspice-suite" %}
+{% set version = "36" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+
+  url: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/{{ version }}/ngspice-{{ version }}.tar.gz
+  sha256: 4f818287efba245341046635b757ae81f879549b326a4316b5f6e697aa517f8c
+
+  patches:
+    - patches/libtoolize-name.patch            # [osx]
+    - patches/fix-xspice-ldflags.patch         # [osx]
+    - patches/vngspice-install-location.patch  # [win]
+
+build:
+  number: 6
+  skip: True  # [win and vc<14]
+
+# Due to how 'conda render' extracts metadata info, the 'outputs'
+# key must appear OUTSIDE of the jinja conditional below!
+outputs:
+
+##
+## UNIX
+##
+{% if unix %}
+
+  - name: ngspice-lib
+    script: build_lib.sh
+
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - llvm-openmp  # [osx]
+        - libgomp      # [linux]
+        - autoconf
+        - automake
+        - make
+        - libtool
+        - texinfo
+        - bison
+        - flex
+
+      host:
+        - llvm-openmp  # [osx]
+        - libgomp      # [linux]
+        - ncurses
+        - readline
+
+      run:
+        - llvm-openmp  # [osx]
+        - libgomp      # [linux]
+        - ncurses
+        - readline
+
+    test:
+      commands:
+        - test -f $PREFIX/lib/libngspice{{ SHLIB_EXT }}
+
+  - name: ngspice-exe
+    script: build_exe.sh
+
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - llvm-openmp  # [osx]
+        - libgomp      # [linux]
+        - autoconf
+        - automake
+        - make
+        - libtool
+        - texinfo
+        - bison
+        - flex
+
+      host:
+        - llvm-openmp  # [osx]
+        - libgomp      # [linux]
+        - ncurses
+        - readline
+        - xorg-libx11
+        - xorg-libxaw
+        - xorg-libxt
+
+      run:
+        - llvm-openmp  # [osx]
+        - libgomp      # [linux]
+        - ncurses
+        - readline
+        - xorg-libx11
+        - xorg-libxaw
+        - xorg-libxt
+
+    test:
+      files:
+        test-files
+      commands:
+        - $PREFIX/bin/ngspice --version
+        - $PREFIX/bin/ngspice -b -r /tmp/raw.out test-files/test.cir
+
+  - name: ngspice
+    requirements:
+      run:
+        - {{ pin_subpackage('ngspice-lib', exact=True) }}
+        - {{ pin_subpackage('ngspice-exe', exact=True) }}
+
+    test:
+      commands:
+        - test -f $PREFIX/lib/libngspice{{ SHLIB_EXT }}
+        - $PREFIX/bin/ngspice --version
+
+##
+## WINDOWS
+##
+{% else %}
+
+  - name: ngspice-lib
+    script: build_lib.bat
+
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+
+      host:
+        # technically this ought to be in the 'build' requirements,
+        # but it's easier to locate if we put it here, via LIBRARY_BIN
+        - winflexbison
+
+    test:
+      commands:
+        - if not exist %PREFIX%\\bin\\ngspice.dll exit 1
+
+  - name: ngspice-exe
+    script: build_exe.bat
+
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+
+      host:
+        # technically this ought to be in the 'build' requirements,
+        # but it's easier to locate if we put it here, via LIBRARY_BIN
+        - winflexbison
+
+    test:
+      files:
+        test-files
+      commands:
+        - "call %PREFIX%\\bin\\ngspice_con.exe --version"
+        - "call %PREFIX%\\bin\\ngspice_con.exe -b -r raw.out test-files\\test.cir"
+
+  - name: ngspice
+    requirements:
+      run:
+        - {{ pin_subpackage('ngspice-lib', exact=True) }}
+        - {{ pin_subpackage('ngspice-exe', exact=True) }}
+
+    test:
+      commands:
+        - if not exist %PREFIX%\\bin\\ngspice.dll exit 1
+        - "%PREFIX%\\bin\\ngspice_con.exe --version"
+
+{% endif %}
+
+about:
+  home: http://ngspice.sourceforge.net
+  doc_url: http://ngspice.sourceforge.net/docs.html
+  dev_url: http://ngspice.sourceforge.net/devel.html
+
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: COPYING
+
+  summary: 'The open source spice simulator for electric and electronic circuits'
+  description: |
+    ngspice is the open source spice simulator for electric and electronic circuits.
+    
+    Such a circuit may comprise of JFETs, bipolar and MOS transistors, passive elements
+    like R, L, or C, diodes, transmission lines and other devices, all interconnected
+    in a netlist. Digital circuits are simulated as well, event driven and fast, from
+    single gates to complex circuits. And you may enter the combination of both analog
+    and digital as a mixed-signal circuit.
+    
+    ngspice offers a wealth of device models for active, passive, analog, and digital
+    elements. Model parameters are provided by the semiconductor manufacturers.
+    The user add her circuits as a netlist, and the output is one or more graphs of
+    currents, voltages and other electrical quantities or is saved in a data file.
+
+    Note:
+      This build was configured with `--enable-xspice --enable-cider --enable=openmp`
+      See the [build script](https://git.io/JfVZX) for more specifics.
+
+extra:
+  recipe-maintainers:
+    - stuarteberg

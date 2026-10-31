@@ -1,0 +1,60 @@
+# This file created by conda-build 3.21.7
+# ------------------------------------------------
+
+package:
+  name: ngspice-exe
+  version: '36'
+source:
+  patches:
+    - patches/vngspice-install-location.patch
+  sha256: 4f818287efba245341046635b757ae81f879549b326a4316b5f6e697aa517f8c
+  url: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/36/ngspice-36.tar.gz
+build:
+  noarch: false
+  noarch_python: false
+  number: '6'
+  script: build_exe.bat
+  string: h7a24507_6
+requirements:
+  build:
+    - vs2017_win-64 19.16.27033 hb90652a_6
+    - vswhere 2.8.4 h57928b3_0
+  host:
+    - ucrt 10.0.20348.0 h57928b3_0
+    - vc 14.2 hb210afc_6
+    - vs2015_runtime 14.29.30037 h902a5da_6
+    - winflexbison 2.5.22 he025d50_0
+  run:
+    - vc >=14.1,<15
+    - vs2015_runtime >=14.16.27033
+    - winflexbison >=2.5.22,<2.6.0a0
+test:
+  commands:
+    - call %PREFIX%\bin\ngspice_con.exe --version
+    - call %PREFIX%\bin\ngspice_con.exe -b -r raw.out test-files\test.cir
+  files: test-files
+about:
+  description: "ngspice is the open source spice simulator for electric and electronic\
+    \ circuits.\n\nSuch a circuit may comprise of JFETs, bipolar and MOS transistors,\
+    \ passive elements\nlike R, L, or C, diodes, transmission lines and other devices,\
+    \ all interconnected\nin a netlist. Digital circuits are simulated as well, event\
+    \ driven and fast, from\nsingle gates to complex circuits. And you may enter the\
+    \ combination of both analog\nand digital as a mixed-signal circuit.\n\nngspice\
+    \ offers a wealth of device models for active, passive, analog, and digital\n\
+    elements. Model parameters are provided by the semiconductor manufacturers.\n\
+    The user add her circuits as a netlist, and the output is one or more graphs of\n\
+    currents, voltages and other electrical quantities or is saved in a data file.\n\
+    \nNote:\n  This build was configured with `--enable-xspice --enable-cider --enable=openmp`\n\
+    \  See the [build script](https://git.io/JfVZX) for more specifics.\n"
+  dev_url: http://ngspice.sourceforge.net/devel.html
+  doc_url: http://ngspice.sourceforge.net/docs.html
+  home: http://ngspice.sourceforge.net
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: COPYING
+  summary: The open source spice simulator for electric and electronic circuits
+extra:
+  copy_test_source_files: true
+  final: true
+  recipe-maintainers:
+    - stuarteberg

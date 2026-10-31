@@ -1,0 +1,71 @@
+{
+  "paths": [
+    {
+      "_path": "bin/ngspice.exe",
+      "path_type": "hardlink",
+      "sha256": "beb7988d5d85d9fdfd79e82beba80f67e500e2f0f00747caf4e09b1c6307f774",
+      "size_in_bytes": 7143424
+    },
+    {
+      "_path": "bin/ngspice.pdb",
+      "path_type": "hardlink",
+      "sha256": "0a84a89d5887b271724c609af2ac9780fe90f296d31c2bdf7bb5249286f3fbe5",
+      "size_in_bytes": 25276416
+    },
+    {
+      "_path": "bin/ngspice_con.exe",
+      "path_type": "hardlink",
+      "sha256": "4371eb40bcb66d4d464f7f6119c8e20c0cfbdbe0c5a715377024ddd75da910e3",
+      "size_in_bytes": 6366720
+    },
+    {
+      "_path": "bin/vcomp140.dll",
+      "path_type": "hardlink",
+      "sha256": "f86bac0fcf3bc137cb2406d2cc33df7fd190bd09fb4332179d7d2dea2201833f",
+      "size_in_bytes": 185232
+    },
+    {
+      "_path": "lib/ngspice/analog.cm",
+      "path_type": "hardlink",
+      "sha256": "c779488661d9d85829ec3263bcbaedc527887f884c749d2d2095a4f747ab2509",
+      "size_in_bytes": 260096
+    },
+    {
+      "_path": "lib/ngspice/digital.cm",
+      "path_type": "hardlink",
+      "sha256": "c6b09540c9c5fb4908e2ddb1fd62b0e8ec51bb2c6e3de21deab627a58d62b94f",
+      "size_in_bytes": 265216
+    },
+    {
+      "_path": "lib/ngspice/spice2poly.cm",
+      "path_type": "hardlink",
+      "sha256": "39f2b8e2ad6a5a0cade3b52fb91f907fed14d5b4d014a880db6df06236379e0d",
+      "size_in_bytes": 93696
+    },
+    {
+      "_path": "lib/ngspice/table.cm",
+      "path_type": "hardlink",
+      "sha256": "7262289347f80bc131a7f16991c1e1de00a2c4e1493e9d802872aa74ccc127d2",
+      "size_in_bytes": 187904
+    },
+    {
+      "_path": "lib/ngspice/xtradev.cm",
+      "path_type": "hardlink",
+      "sha256": "d86856ce066dd61f836f776df427fd7167cbe87a0d0b4431ed532ab957a98f43",
+      "size_in_bytes": 145920
+    },
+    {
+      "_path": "lib/ngspice/xtraevt.cm",
+      "path_type": "hardlink",
+      "sha256": "bd272cb0498ae16cdeb5574ae125c1cb9041b8a3304572a1ea8656f74ab2023d",
+      "size_in_bytes": 121344
+    },
+    {
+      "_path": "share/ngspice/scripts/spinit",
+      "path_type": "hardlink",
+      "sha256": "b18ac1e026624d86d2a58af35dd4963605c4a3a0ff09435c1756ac2f181d6509",
+      "size_in_bytes": 655
+    }
+  ],
+  "paths_version": 1
+}
