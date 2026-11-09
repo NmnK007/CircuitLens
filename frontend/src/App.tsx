@@ -29,7 +29,10 @@ export default function App() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [checking, setChecking] = useState(false);
   function navigate(next: View) { setView(next); }
-  useEffect(() => { headingRef.current?.focus({ preventScroll: true }); }, [view]);
+  useEffect(() => {
+    headingRef.current?.focus({ preventScroll: true });
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [view]);
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
       const target = event.target as HTMLElement;
